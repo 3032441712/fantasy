@@ -15,6 +15,8 @@ use Workerman\Worker;
 require_once __DIR__ . '/../../Workerman/Autoloader.php';
 require_once __DIR__ . '/ThriftWorker.php';
 
+// 引入配置文件
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php');
 
 $worker = new ThriftWorker('tcp://0.0.0.0:9090');
 $worker->count = 16;
