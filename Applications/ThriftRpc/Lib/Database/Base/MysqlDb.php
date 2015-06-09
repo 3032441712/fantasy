@@ -33,7 +33,7 @@ class MysqlDb implements DbInterface
         }
     }
 
-    public function query($sql, $params)
+    public function query($sql, $params = [])
     {
         $statement = $this->_link->prepare($sql);
         foreach ($params as $k => $v) {
@@ -52,7 +52,7 @@ class MysqlDb implements DbInterface
         return $statement;
     }
 
-    public function findOne($sql, $params, $fetch_style = \PDO::FETCH_ASSOC)
+    public function findOne($sql, $params = [], $fetch_style = \PDO::FETCH_ASSOC)
     {
         $statement = $this->query($sql, $params);
         $data = $statement->fetch($fetch_style);
@@ -61,7 +61,7 @@ class MysqlDb implements DbInterface
         return $data;
     }
 
-    public function findAll($sql, $params, $fetch_style = \PDO::FETCH_ASSOC)
+    public function findAll($sql, $params = [], $fetch_style = \PDO::FETCH_ASSOC)
     {
         $statement = $this->query($sql, $params);
         $data = $statement->fetchAll($fetch_style);
@@ -70,7 +70,7 @@ class MysqlDb implements DbInterface
         return $data;
     }
 
-    public function insert($table, $data)
+    public function insert($table, $data = [])
     {
         $params = [];
         foreach ($data as $k => $v) {
@@ -84,7 +84,7 @@ class MysqlDb implements DbInterface
         return $this->getLastInsertId();
     }
 
-    public function update($table, $data, $condtion)
+    public function update($table, $data = [], $condtion)
     {
         
     }

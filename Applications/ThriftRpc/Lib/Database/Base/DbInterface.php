@@ -11,7 +11,7 @@ interface DbInterface
      * 
      * @return \PDOStatement
      */
-    public function query($sql, $params);
+    public function query($sql, $params = []);
 
     /**
      * 查找单条数据
@@ -21,7 +21,7 @@ interface DbInterface
      *
      * @return array
      */
-    public function findOne($sql, $params, $fetch_style = \PDO::FETCH_ASSOC);
+    public function findOne($sql, $params = [], $fetch_style = \PDO::FETCH_ASSOC);
 
     /**
      * 查找全部数据
@@ -31,7 +31,7 @@ interface DbInterface
      * 
      * @return array
      */
-    public function findAll($sql, $params, $fetch_style = \PDO::FETCH_ASSOC);
+    public function findAll($sql, $params = [], $fetch_style = \PDO::FETCH_ASSOC);
 
     /**
      * 插入数据
@@ -41,7 +41,7 @@ interface DbInterface
      * 
      * @return int 返回主键
      */
-    public function insert($table, $data);
+    public function insert($table, $data = []);
 
     /**
      * 更新表数据
@@ -52,7 +52,7 @@ interface DbInterface
      * 
      * @return int 影响数据的行数
      */
-    public function update($table, $data, $condtion);
+    public function update($table, $data = [], $condtion);
 
     /**
      * 获取插入数据的主键ID
