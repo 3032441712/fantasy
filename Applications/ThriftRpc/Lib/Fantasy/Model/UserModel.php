@@ -5,8 +5,16 @@ namespace Fantasy\Model;
 use Fantasy\Service\UserService;
 class UserModel
 {
-    public static function fantasyUserLogin()
+    /**
+     * 用户登陆系统
+     * 
+     * @param string $username 用户名
+     * @param string $password 用户密码
+     * 
+     * @return string
+     */
+    public static function fantasyUserLogin($username, $password)
     {
-        return UserService::fantasyUserLogin();
+        return UserService::fantasyUserLogin($username, $password);
     }
 }
