@@ -60,4 +60,14 @@ class FantasyApiHandler extends FantasyService implements FantasyApiIf
     {
         
     }
+
+    public function fantasyUserAdd($input_data)
+    {
+        
+    }
+
+    public function fantasyUserUpdate($input_data)
+    {
+        
+    }
 }

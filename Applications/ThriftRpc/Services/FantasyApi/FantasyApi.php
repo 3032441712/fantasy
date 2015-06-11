@@ -49,6 +49,22 @@ interface FantasyApiIf {
    * @throws \Services\FantasyApi\Apiception
    */
   public function fantasyUserList($input_data);
+  /**
+   * 添加用户信息
+   * 
+   * @param string $input_data
+   * @return string
+   * @throws \Services\FantasyApi\Apiception
+   */
+  public function fantasyUserAdd($input_data);
+  /**
+   * 更新用户信息
+   * 
+   * @param string $input_data
+   * @return string
+   * @throws \Services\FantasyApi\Apiception
+   */
+  public function fantasyUserUpdate($input_data);
 }
 
 class FantasyApiClient implements \Services\FantasyApi\FantasyApiIf {
@@ -276,6 +292,114 @@ class FantasyApiClient implements \Services\FantasyApi\FantasyApiIf {
       throw $result->err1;
     }
     throw new \Exception("fantasyUserList failed: unknown result");
+  }
+
+  public function fantasyUserAdd($input_data)
+  {
+    $this->send_fantasyUserAdd($input_data);
+    return $this->recv_fantasyUserAdd();
+  }
+
+  public function send_fantasyUserAdd($input_data)
+  {
+    $args = new \Services\FantasyApi\FantasyApi_fantasyUserAdd_args();
+    $args->input_data = $input_data;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'fantasyUserAdd', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('fantasyUserAdd', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_fantasyUserAdd()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Services\FantasyApi\FantasyApi_fantasyUserAdd_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Services\FantasyApi\FantasyApi_fantasyUserAdd_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->err1 !== null) {
+      throw $result->err1;
+    }
+    throw new \Exception("fantasyUserAdd failed: unknown result");
+  }
+
+  public function fantasyUserUpdate($input_data)
+  {
+    $this->send_fantasyUserUpdate($input_data);
+    return $this->recv_fantasyUserUpdate();
+  }
+
+  public function send_fantasyUserUpdate($input_data)
+  {
+    $args = new \Services\FantasyApi\FantasyApi_fantasyUserUpdate_args();
+    $args->input_data = $input_data;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'fantasyUserUpdate', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('fantasyUserUpdate', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_fantasyUserUpdate()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Services\FantasyApi\FantasyApi_fantasyUserUpdate_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Services\FantasyApi\FantasyApi_fantasyUserUpdate_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->err1 !== null) {
+      throw $result->err1;
+    }
+    throw new \Exception("fantasyUserUpdate failed: unknown result");
   }
 
 }
@@ -982,6 +1106,356 @@ class FantasyApi_fantasyUserList_result {
 
 }
 
+class FantasyApi_fantasyUserAdd_args {
+  static $_TSPEC;
+
+  /**
+   * @var string
+   */
+  public $input_data = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'input_data',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['input_data'])) {
+        $this->input_data = $vals['input_data'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'FantasyApi_fantasyUserAdd_args';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->input_data);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('FantasyApi_fantasyUserAdd_args');
+    if ($this->input_data !== null) {
+      $xfer += $output->writeFieldBegin('input_data', TType::STRING, 1);
+      $xfer += $output->writeString($this->input_data);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class FantasyApi_fantasyUserAdd_result {
+  static $_TSPEC;
+
+  /**
+   * @var string
+   */
+  public $success = null;
+  /**
+   * @var \Services\FantasyApi\Apiception
+   */
+  public $err1 = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::STRING,
+          ),
+        1 => array(
+          'var' => 'err1',
+          'type' => TType::STRUCT,
+          'class' => '\Services\FantasyApi\Apiception',
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['success'])) {
+        $this->success = $vals['success'];
+      }
+      if (isset($vals['err1'])) {
+        $this->err1 = $vals['err1'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'FantasyApi_fantasyUserAdd_result';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 0:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->success);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 1:
+          if ($ftype == TType::STRUCT) {
+            $this->err1 = new \Services\FantasyApi\Apiception();
+            $xfer += $this->err1->read($input);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('FantasyApi_fantasyUserAdd_result');
+    if ($this->success !== null) {
+      $xfer += $output->writeFieldBegin('success', TType::STRING, 0);
+      $xfer += $output->writeString($this->success);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->err1 !== null) {
+      $xfer += $output->writeFieldBegin('err1', TType::STRUCT, 1);
+      $xfer += $this->err1->write($output);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class FantasyApi_fantasyUserUpdate_args {
+  static $_TSPEC;
+
+  /**
+   * @var string
+   */
+  public $input_data = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'input_data',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['input_data'])) {
+        $this->input_data = $vals['input_data'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'FantasyApi_fantasyUserUpdate_args';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->input_data);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('FantasyApi_fantasyUserUpdate_args');
+    if ($this->input_data !== null) {
+      $xfer += $output->writeFieldBegin('input_data', TType::STRING, 1);
+      $xfer += $output->writeString($this->input_data);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class FantasyApi_fantasyUserUpdate_result {
+  static $_TSPEC;
+
+  /**
+   * @var string
+   */
+  public $success = null;
+  /**
+   * @var \Services\FantasyApi\Apiception
+   */
+  public $err1 = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::STRING,
+          ),
+        1 => array(
+          'var' => 'err1',
+          'type' => TType::STRUCT,
+          'class' => '\Services\FantasyApi\Apiception',
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['success'])) {
+        $this->success = $vals['success'];
+      }
+      if (isset($vals['err1'])) {
+        $this->err1 = $vals['err1'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'FantasyApi_fantasyUserUpdate_result';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 0:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->success);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 1:
+          if ($ftype == TType::STRUCT) {
+            $this->err1 = new \Services\FantasyApi\Apiception();
+            $xfer += $this->err1->read($input);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('FantasyApi_fantasyUserUpdate_result');
+    if ($this->success !== null) {
+      $xfer += $output->writeFieldBegin('success', TType::STRING, 0);
+      $xfer += $output->writeString($this->success);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->err1 !== null) {
+      $xfer += $output->writeFieldBegin('err1', TType::STRUCT, 1);
+      $xfer += $this->err1->write($output);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
 class FantasyApiProcessor {
   protected $handler_ = null;
   public function __construct($handler) {
@@ -1096,6 +1570,52 @@ class FantasyApiProcessor {
     else
     {
       $output->writeMessageBegin('fantasyUserList', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
+  protected function process_fantasyUserAdd($seqid, $input, $output) {
+    $args = new \Services\FantasyApi\FantasyApi_fantasyUserAdd_args();
+    $args->read($input);
+    $input->readMessageEnd();
+    $result = new \Services\FantasyApi\FantasyApi_fantasyUserAdd_result();
+    try {
+      $result->success = $this->handler_->fantasyUserAdd($args->input_data);
+    } catch (\Services\FantasyApi\Apiception $err1) {
+      $result->err1 = $err1;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'fantasyUserAdd', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('fantasyUserAdd', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
+  protected function process_fantasyUserUpdate($seqid, $input, $output) {
+    $args = new \Services\FantasyApi\FantasyApi_fantasyUserUpdate_args();
+    $args->read($input);
+    $input->readMessageEnd();
+    $result = new \Services\FantasyApi\FantasyApi_fantasyUserUpdate_result();
+    try {
+      $result->success = $this->handler_->fantasyUserUpdate($args->input_data);
+    } catch (\Services\FantasyApi\Apiception $err1) {
+      $result->err1 = $err1;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'fantasyUserUpdate', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('fantasyUserUpdate', TMessageType::REPLY, $seqid);
       $result->write($output);
       $output->writeMessageEnd();
       $output->getTransport()->flush();
