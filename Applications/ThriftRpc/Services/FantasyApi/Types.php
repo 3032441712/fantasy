@@ -27,7 +27,7 @@ class Apiception extends TException {
   /**
    * @var string
    */
-  public $msg = null;
+  public $message = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
@@ -37,7 +37,7 @@ class Apiception extends TException {
           'type' => TType::I32,
           ),
         2 => array(
-          'var' => 'msg',
+          'var' => 'message',
           'type' => TType::STRING,
           ),
         );
@@ -46,8 +46,8 @@ class Apiception extends TException {
       if (isset($vals['code'])) {
         $this->code = $vals['code'];
       }
-      if (isset($vals['msg'])) {
-        $this->msg = $vals['msg'];
+      if (isset($vals['message'])) {
+        $this->message = $vals['message'];
       }
     }
   }
@@ -80,7 +80,7 @@ class Apiception extends TException {
           break;
         case 2:
           if ($ftype == TType::STRING) {
-            $xfer += $input->readString($this->msg);
+            $xfer += $input->readString($this->message);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -103,9 +103,9 @@ class Apiception extends TException {
       $xfer += $output->writeI32($this->code);
       $xfer += $output->writeFieldEnd();
     }
-    if ($this->msg !== null) {
-      $xfer += $output->writeFieldBegin('msg', TType::STRING, 2);
-      $xfer += $output->writeString($this->msg);
+    if ($this->message !== null) {
+      $xfer += $output->writeFieldBegin('message', TType::STRING, 2);
+      $xfer += $output->writeString($this->message);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
