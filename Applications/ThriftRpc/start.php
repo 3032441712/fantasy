@@ -19,8 +19,12 @@ require_once __DIR__ . '/ThriftWorker.php';
 require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php');
 
 $worker = new ThriftWorker('tcp://0.0.0.0:9090');
-$worker->count = 16;
-$worker->class = 'FantasyApi';
+$worker->count = 2;
+$worker->class = 'UserService';
+
+$worker = new ThriftWorker('tcp://0.0.0.0:9091');
+$worker->count = 2;
+$worker->class = 'AccountService';
 
 
 // 如果不是在根目录启动，则运行runAll方法

@@ -1,10 +1,11 @@
 <?php
 
-namespace Services\FantasyApi;
+namespace Services\UserService;
 
 use Fantasy\Model\UserModel;
+use Fantasy\Base\ThriftService;
 
-class FantasyApiHandler extends FantasyService implements FantasyApiIf
+class UserServiceHandler extends ThriftService implements UserServiceIf
 {
     public function fantasyUserLogin($input_data)
     {
@@ -13,11 +14,11 @@ class FantasyApiHandler extends FantasyService implements FantasyApiIf
         $password = isset($app_params['password']) ? $app_params['password'] : '';
 
         if ($username == '') {
-            throw new Apiception(['code' => FantasyService::USER_PARAM_USERNAME_NOT_FOUND, 'message' => '请输入用户名']);
+            throw new Apiception(['code' => ThriftService::USER_PARAM_USERNAME_NOT_FOUND, 'message' => '请输入用户名']);
         }
 
         if ($password == '') {
-            throw new Apiception(['code' => FantasyService::USER_APRAM_PASSWORD_NOT_FOUND, 'message' => '请输入密码']);
+            throw new Apiception(['code' => ThriftService::USER_APRAM_PASSWORD_NOT_FOUND, 'message' => '请输入密码']);
         }
 
         try {
@@ -42,7 +43,7 @@ class FantasyApiHandler extends FantasyService implements FantasyApiIf
         $user_id = isset($app_params['user_id']) ? $app_params['user_id'] : 0;
 
         if ($user_id == 0) {
-            throw new Apiception(['code' => FantasyService::USER_PARAM_USERID_NOT_FOUND, 'message' => '请输入正确的用户ID']);
+            throw new Apiception(['code' => ThriftService::USER_PARAM_USERID_NOT_FOUND, 'message' => '请输入正确的用户ID']);
         }
 
         try {
