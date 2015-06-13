@@ -36,18 +36,18 @@ class MysqlDb implements DbInterface
     public function query($sql, $params = [])
     {
         $statement = $this->_link->prepare($sql);
-        foreach ($params as $k => $v) {
-            $data_type = \PDO::PARAM_STR;
-            if (is_int($v)) {
-                $data_type = \PDO::PARAM_INT;
-            } elseif (is_bool($v)) {
-                $data_type = \PDO::PARAM_BOOL;
-            } elseif (is_null($v)) {
-                $data_type = \PDO::PARAM_NULL;
-            }
-            $statement->bindParam($k, $v, $data_type);
-        }
-        $statement->execute();
+//         foreach ($params as $k => $v) {
+//             $data_type = \PDO::PARAM_STR;
+//             if (is_int($v)) {
+//                 $data_type = \PDO::PARAM_INT;
+//             } elseif (is_bool($v)) {
+//                 $data_type = \PDO::PARAM_BOOL;
+//             } elseif (is_null($v)) {
+//                 $data_type = \PDO::PARAM_NULL;
+//             }
+//             $statement->bindParam($k, $v, $data_type);
+//         }
+        $statement->execute($params);
 
         return $statement;
     }
