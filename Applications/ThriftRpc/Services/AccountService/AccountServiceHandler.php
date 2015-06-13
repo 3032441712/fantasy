@@ -7,7 +7,13 @@ class AccountServiceHandler extends ThriftService implements AccountServiceIf
 {
     public function fantasyAccountAdd($input_data)
     {
-        $app_params = $this->loadParams($input_data);
+        try {
+            $app_params = $this->loadParams($input_data);
+        } catch (\PDOException $e) {
+            throw new Apiception(['code' => $e->getCode(), 'message' => '数据库级别错误,请通知接口负责人.']);
+        } catch (\Exception $e) {
+            throw new Apiception(['code' => $e->getCode(), 'message' => $e->getMessage()]);
+        }
 
         return $this->response(0, 'success', 'abcedddd');
     }
