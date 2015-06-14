@@ -26,9 +26,9 @@ class UserServiceHandler extends ThriftService implements UserServiceIf
 
             return $this->response(0, 'success', $data);
         } catch (\PDOException $e) {
-            return $this->response(900, '系统内部错误:'.$e->getMessage());
+            throw new Apiception(['code' => '900', 'message' => '系统内部数据库异常,请联系服务管理人员.']);
         } catch (\Exception $e) {
-            return $this->response($e->getCode(), $e->getMessage());
+            throw new Apiception(['code' => $e->getCode(), 'message' => $e->getMessage()]);
         }
     }
 
@@ -51,9 +51,9 @@ class UserServiceHandler extends ThriftService implements UserServiceIf
 
             return $this->response(0, 'success', $data);
         } catch (\PDOException $e) {
-            return $this->response(900, '系统内部错误:'.$e->getMessage());
+            throw new Apiception(['code' => '900', 'message' => '系统内部数据库异常,请联系服务管理人员.']);
         } catch (\Exception $e) {
-            return $this->response($e->getCode(), $e->getMessage());
+            throw new Apiception(['code' => $e->getCode(), 'message' => $e->getMessage()]);
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Base;
 
+use Fantasy\Base\Application;
 class MysqlDb implements DbInterface
 {
     /**
@@ -35,19 +36,22 @@ class MysqlDb implements DbInterface
 
     public function query($sql, $params = [])
     {
+        Application::$RUNSQL[] = $sql;
+        Application::$ERRORSQL = $sql;
+
         $statement = $this->_link->prepare($sql);
-        foreach ($params as $k => $v) {
-            $data_type = \PDO::PARAM_STR;
-            if (is_int($v)) {
-                $data_type = \PDO::PARAM_INT;
-            } elseif (is_bool($v)) {
-                $data_type = \PDO::PARAM_BOOL;
-            } elseif (is_null($v)) {
-                $data_type = \PDO::PARAM_NULL;
-            }
-            $statement->bindParam($k, $v, $data_type);
-        }
-        $statement->execute();
+//         foreach ($params as $k => $v) {
+//             $data_type = \PDO::PARAM_STR;
+//             if (is_int($v)) {
+//                 $data_type = \PDO::PARAM_INT;
+//             } elseif (is_bool($v)) {
+//                 $data_type = \PDO::PARAM_BOOL;
+//             } elseif (is_null($v)) {
+//                 $data_type = \PDO::PARAM_NULL;
+//             }
+//             $statement->bindParam($k, $v, $data_type);
+//         }
+        $statement->execute($params);
 
         return $statement;
     }
@@ -84,9 +88,20 @@ class MysqlDb implements DbInterface
         return $this->getLastInsertId();
     }
 
-    public function update($table, $data = [], $condtion)
+    public function update($table, $data = [], $condtion = '')
     {
-        
+        $params = [];
+        $sql = 'UPDATE '.$table.' SET ';
+        foreach ($data as $k => $v) {
+            $sql .= $k.'=:'.$k.',';
+            $params[':'.$k] = $v;
+        }
+        $sql = substr($sql, 0, strlen($sql)-1).' '.$condtion;
+        $statement = $this->query($sql, $params);
+        $count = $statement->rowCount();
+        $statement->closeCursor();
+
+        return $count;
     }
 
     public function getLastInsertId()
