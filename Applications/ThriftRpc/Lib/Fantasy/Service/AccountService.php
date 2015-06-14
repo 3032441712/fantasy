@@ -24,9 +24,12 @@ class AccountService
      * 
      * @return array
      */
-    public static function findAccountInfoById($account_id)
+    public static function findAccountInfoById($account_id, $trans = false)
     {
         $sql = 'SELECT '.implode(',', self::$account_field).' FROM fantasy_account WHERE account_id = :account_id LIMIT 1';
+        if ($trans) {
+            $sql .= ' FOR UPDATE';
+        }
         $account_data = Db::findOne($sql, [':account_id' => $account_id]);
 
         return $account_data;
@@ -41,13 +44,13 @@ class AccountService
      * 
      * @return array
      */
-    public static function findAccountInfoByTitle($user_id, $account_title, $account_id = 0)
+    public static function findAccountInfoByTitle($user_id, $account_title, $account_id = 0, $trans = false)
     {
         $sql = 'SELECT '.implode(',', self::$account_field).' FROM fantasy_account WHERE user_id = :user_id AND account_title = :account_title';
         if ($account_id > 0) {
             $sql .= ' AND account_id <> '.intval($account_id);
         }
-        $account_data = Db::findOne($sql.' LIMIT 1', [':user_id' => $user_id, ':account_title' => $account_title]);
+        $account_data = Db::findOne($sql.' LIMIT 1'.($trans ? ' FOR UPDATE' : ''), [':user_id' => $user_id, ':account_title' => $account_title]);
 
         return $account_data;
     }
